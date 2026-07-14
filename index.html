@@ -2045,7 +2045,7 @@ function showSuccessMessage() {
       <p>✉️ inquiry@discovergrp.com | traveldesk@discovergrp.com</p>
       <p style="margin-top:0.75rem;font-size:0.65rem;color:#94a3b8;">Document Reference: ${refNum} | This is a system-generated booking confirmation.</p>
       <div class="bc-actions">
-        <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn-print" id="bcPrintBtn" onclick="window.print()" disabled style="opacity:0.5;cursor:not-allowed;">🖨️ Print / Save as PDF</button>
         <button class="btn-new" onclick="location.reload()">← Back to Sales Page</button>
       </div>
     </div>
@@ -2157,12 +2157,16 @@ function updateSubmitState() {
   const btn = document.getElementById('bcSubmitBtn');
   const status = document.getElementById('bcSubmitStatus');
   
+  const printBtn = document.getElementById('bcPrintBtn');
+
   if (termsChecked && hasSigned) {
     btn.disabled = false;
+    if (printBtn) { printBtn.disabled = false; printBtn.style.opacity = '1'; printBtn.style.cursor = 'pointer'; }
     status.className = 'bc-submit-status ready';
     status.textContent = '\u2713 Signed — ready to submit';
   } else {
     btn.disabled = true;
+    if (printBtn) { printBtn.disabled = true; printBtn.style.opacity = '0.5'; printBtn.style.cursor = 'not-allowed'; }
     status.className = 'bc-submit-status pending';
     if (!termsChecked && !hasSigned) {
       status.textContent = 'Please accept the terms and sign above to submit';
@@ -2185,7 +2189,7 @@ function submitSignedConfirmation() {
   
   // Send signature data to Web3Forms along with booking reference
   const formData = new FormData();
-  formData.append('access_key', '4acc2541-8e52-4e2a-a0c4-c5e97a0c3e2a');
+  formData.append('access_key', '7332ba6f-c90e-4d55-ac88-cf63c72e4e48');
   formData.append('subject', 'SIGNED Booking Confirmation - ' + (lastBookingData ? lastBookingData.allTravelers[0].firstName + ' ' + lastBookingData.allTravelers[0].lastName : 'Client'));
   formData.append('from_name', 'Route A Preferred - Signed Confirmation');
   formData.append('Booking_Reference', document.querySelector('.bc-footer p:last-child') ? document.querySelector('.bc-footer p:last-child').textContent : '');
@@ -2195,6 +2199,22 @@ function submitSignedConfirmation() {
   formData.append('Date_Signed', new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
   formData.append('Signature_Data', sigDataUrl);
   
+  // Also build a comprehensive booking summary for the email
+  const bd = lastBookingData;
+  const travelerList = bd.allTravelers.map((t, i) => `${i+1}. ${t.firstName} ${t.middleName || ''} ${t.lastName}${t.suffix && t.suffix !== 'None' ? ' ' + t.suffix : ''} (${t.gender}, DOB: ${t.dob}, Contact: ${t.contact}, Email: ${t.email})`).join('\n');
+  const pricingList = bd.classified.map(c => `${c.label}: ₱${c.finalRate.toLocaleString()} x ${c.count} = ₱${(c.finalRate * c.count).toLocaleString()}`).join('\n');
+  
+  formData.append('Travel_Date', bd.travelDateLabel || bd.travelDateId);
+  formData.append('Package_Type', bd.packageType === 'full' ? 'Full Package (With Airfare)' : 'Land Package Only');
+  formData.append('Payment_Scheme', bd.paymentScheme === 'installment' ? 'Monthly Installment' : bd.paymentScheme === 'downpayment' ? '50% Downpayment' : 'Full Cash Payment');
+  formData.append('Total_Passengers', String(bd.count));
+  formData.append('Grand_Total', '₱' + bd.grandTotal.toLocaleString());
+  formData.append('All_Travelers', travelerList);
+  formData.append('Pricing_Breakdown', pricingList);
+  if (bd.promoApplied) formData.append('Promo_Applied', 'Yes - Buy 5 Get 1 FREE');
+  formData.append('Contact_Email', bd.allTravelers[0].email);
+  formData.append('Contact_Number', bd.allTravelers[0].contact);
+
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     body: formData
@@ -2205,7 +2225,7 @@ function submitSignedConfirmation() {
     btn.style.background = '#16a34a';
     
     // Show success toast
-    showToast('Signed booking confirmation submitted successfully!', 'success');
+    showToast('Signed booking confirmation sent to inquiry@discovergrp.com!', 'success');
   }).catch(err => {
     status.className = 'bc-submit-status ready';
     status.textContent = '\u2713 Confirmation saved. You may print this page for your records.';
