@@ -1209,11 +1209,13 @@ function updateFreebies() {
   const jul18 = new Date('2026-07-18T23:59:59+08:00');
   const jul20 = new Date('2026-07-20T23:59:59+08:00');
   const count = parseInt(document.getElementById('travelersCount').value || '1');
+  const travelDateId = document.getElementById('travelDate').value;
+  const hasBuy5Get1 = promoCodeVerified && travelDateId === '2027-06-08';
   
   let freebies = [];
   
-  // Freebie 1: Register on or before Jul 18, 2026
-  if (now <= jul18) {
+  // Freebie 1: Register on or before Jul 18, 2026 — BUT NOT if Buy 5 Get 1 promo is active
+  if (now <= jul18 && !hasBuy5Get1) {
     freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>Free 2 nights Salerno and Amalfi optional tour</strong> worth Php 45,000 per head</span></div>');
   }
   
@@ -1222,9 +1224,8 @@ function updateFreebies() {
     freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>Free Visa Processing and Travel Insurance</strong> worth Php 26,000 per head</span></div>');
   }
   
-  // Freebie 3: Promo code DGexclusive4626 + Jun 8, 2027 travel date
-  const travelDateId = document.getElementById('travelDate').value;
-  if (promoCodeVerified && travelDateId === '2027-06-08') {
+  // Freebie 3: Promo code DGexclusive4626 + Jun 8, 2027 travel date (Buy 5 Get 1 FREE)
+  if (hasBuy5Get1) {
     freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>1 FREE participant in a group of 6</strong> (Promo Code: DGexclusive4626)</span></div>');
   }
   
@@ -1330,6 +1331,9 @@ function recalculate() {
   
   // Render installment preview
   renderInstallmentPreview(grandTotal, travelDateId);
+  
+  // Update freebies based on current state
+  updateFreebies();
 }
 
 function renderInstallmentPreview(total, travelDateId) {
