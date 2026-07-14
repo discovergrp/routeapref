@@ -1012,6 +1012,7 @@ function verifyPromoCode() {
     document.getElementById('promoCodeInput').disabled = true;
     document.getElementById('verifyPromoBtn').disabled = true;
     recalculate();
+    updateFreebies();
   } else {
     promoCodeVerified = false;
     errorEl.classList.add('show');
@@ -1221,6 +1222,12 @@ function updateFreebies() {
     freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>Free Visa Processing and Travel Insurance</strong> worth Php 26,000 per head</span></div>');
   }
   
+  // Freebie 3: Promo code DGexclusive4626 + Jun 8, 2027 travel date
+  const travelDateId = document.getElementById('travelDate').value;
+  if (promoCodeVerified && travelDateId === '2027-06-08') {
+    freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>1 FREE participant in a group of 6</strong> (Promo Code: DGexclusive4626)</span></div>');
+  }
+  
   if (freebies.length > 0) {
     section.style.display = 'block';
     content.innerHTML = freebies.join('');
@@ -1358,9 +1365,11 @@ function renderInstallmentPreview(total, travelDateId) {
   const deadline = new Date(travelStart);
   deadline.setMonth(deadline.getMonth() - 3);
   
-  // First payment starts July 15, 2026
+  // First payment is the day after registration
   const now = new Date();
-  const startMonth = new Date(2026, 6, 15); // July 15, 2026
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const startMonth = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
   let months = 0;
   let checkDate = new Date(startMonth);
   while (checkDate <= deadline) {
@@ -1664,7 +1673,10 @@ function showSuccessMessage() {
     const travelStart = new Date(dates.start);
     const deadline = new Date(travelStart);
     deadline.setMonth(deadline.getMonth() - 3);
-    const startMonth = new Date(2026, 6, 15);
+    // First payment is the day after registration
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const startMonth = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate());
     let months = 0;
     let checkDate = new Date(startMonth);
     while (checkDate <= deadline) { months++; checkDate.setMonth(checkDate.getMonth() + 1); }
@@ -1694,7 +1706,7 @@ function showSuccessMessage() {
       <table class="bc-pricing-table">
         <thead><tr><th>#</th><th>Payment</th><th>Due Date</th><th style="text-align:right;">Amount (Per Head)</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:center;">1</td><td>Down Payment</td><td>Upon booking confirmation</td><td class="text-right font-bold">${formatPHP(50000)}</td></tr>
+          <tr><td style="text-align:center;">1</td><td>Down Payment</td><td>${new Date(Date.now() + 86400000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</td><td class="text-right font-bold">${formatPHP(50000)}</td></tr>
           <tr><td style="text-align:center;">2</td><td>Remaining Balance</td><td>5 days after visa result release</td><td class="text-right font-bold">${formatPHP(balance)}</td></tr>
           <tr class="total-row"><td></td><td style="font-weight:900;">TOTAL</td><td></td><td class="text-right" style="font-size:0.95rem;">${formatPHP(perHead)} /head</td></tr>
         </tbody>
@@ -1707,7 +1719,7 @@ function showSuccessMessage() {
       <table class="bc-pricing-table">
         <thead><tr><th>#</th><th>Payment</th><th>Due Date</th><th style="text-align:right;">Amount (Per Head)</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:center;">1</td><td>Full Payment</td><td>Upon booking confirmation</td><td class="text-right font-bold">${formatPHP(perHead)}</td></tr>
+          <tr><td style="text-align:center;">1</td><td>Full Payment</td><td>${new Date(Date.now() + 86400000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</td><td class="text-right font-bold">${formatPHP(perHead)}</td></tr>
           <tr class="total-row"><td></td><td style="font-weight:900;">TOTAL</td><td></td><td class="text-right" style="font-size:0.95rem;">${formatPHP(perHead)} /head</td></tr>
         </tbody>
       </table>
