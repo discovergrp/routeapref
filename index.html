@@ -424,11 +424,62 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 .bc-actions .btn-new { background: transparent; color: #0a1e5e; border: 2px solid #0a1e5e; }
 .bc-actions .btn-new:hover { background: rgba(10,30,94,0.05); }
 .bc-vat-note { font-size: 0.7rem; color: #6b7a94; font-style: italic; margin-top: 0.5rem; }
+
+/* Terms & Conditions */
+.bc-tc-container { margin-bottom: 2rem; }
+.bc-tc-scroll { max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.5rem; background: #fafbfc; font-size: 0.7rem; line-height: 1.7; color: #374151; }
+.bc-tc-scroll h3 { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #1a1f3a; margin: 1.25rem 0 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid #e2e8f0; }
+.bc-tc-scroll h3:first-child { margin-top: 0; }
+.bc-tc-scroll p { margin-bottom: 0.5rem; text-align: justify; }
+.bc-tc-scroll .indent { padding-left: 1.25rem; }
+.bc-tc-scroll .bold { font-weight: 700; }
+
+/* Agreement Checkbox */
+.bc-agreement { margin: 1.5rem 0; padding: 1.25rem; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 0.75rem; transition: border-color 0.2s; }
+.bc-agreement.checked { border-color: #16a34a; background: #f0fdf4; }
+.bc-agreement label { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; font-size: 0.8rem; color: #1a1f3a; line-height: 1.5; }
+.bc-agreement input[type="checkbox"] { margin-top: 3px; width: 18px; height: 18px; accent-color: #0a1e5e; flex-shrink: 0; cursor: pointer; }
+.bc-agreement .tc-link { display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 1.75rem; margin-top: 0.5rem; font-size: 0.7rem; color: #0a1e5e; font-weight: 700; text-decoration: underline; }
+
+/* Signature Section */
+.bc-signature-section { margin-bottom: 2rem; }
+.bc-signature-intro { font-size: 0.75rem; color: #6b7a94; line-height: 1.6; margin-bottom: 1.5rem; }
+.bc-signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media(max-width:640px) { .bc-signature-grid { grid-template-columns: 1fr; } }
+.bc-sig-box { }
+.bc-sig-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7a94; margin-bottom: 0.5rem; }
+.bc-sig-canvas-wrap { position: relative; border: 2px solid #e2e8f0; border-radius: 0.75rem; background: #fff; height: 120px; overflow: hidden; transition: border-color 0.2s; }
+.bc-sig-canvas-wrap.has-signature { border-color: #16a34a; }
+.bc-sig-canvas-wrap canvas { width: 100%; height: 100%; display: block; cursor: crosshair; }
+.bc-sig-placeholder { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 0.7rem; color: #94a3b8; pointer-events: none; text-align: center; }
+.bc-sig-actions { display: flex; justify-content: flex-end; margin-top: 0.4rem; }
+.bc-sig-clear { font-size: 0.65rem; color: #ef4444; cursor: pointer; border: none; background: none; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.bc-sig-clear:hover { background: #fef2f2; }
+.bc-sig-info { margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid #e8edf5; }
+.bc-sig-info .name { font-size: 0.8rem; font-weight: 700; color: #1a1f3a; }
+.bc-sig-info .date { font-size: 0.65rem; color: #6b7a94; margin-top: 0.15rem; }
+.bc-sig-consultant { border: 2px dashed #e2e8f0; border-radius: 0.75rem; background: #fafbfc; height: 120px; display: flex; align-items: center; justify-content: center; }
+.bc-sig-consultant p { font-size: 0.7rem; color: #94a3b8; font-style: italic; }
+
+/* Confirmation Submit Button */
+.bc-submit-section { text-align: center; margin: 1.5rem 0; }
+.bc-submit-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; background: #0a1e5e; color: white; border: none; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(10,30,94,0.3); }
+.bc-submit-btn:hover { background: #1a3a8b; transform: translateY(-1px); }
+.bc-submit-btn:active { transform: scale(0.97); }
+.bc-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.bc-submit-status { font-size: 0.75rem; margin-top: 0.75rem; }
+.bc-submit-status.ready { color: #16a34a; font-weight: 700; }
+.bc-submit-status.pending { color: #6b7a94; }
+
 @media print {
   body * { visibility: hidden; }
   .booking-confirmation, .booking-confirmation * { visibility: visible; }
   .booking-confirmation { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
   .bc-actions { display: none !important; }
+  .bc-submit-section { display: none !important; }
+  .bc-sig-clear { display: none !important; }
+  .bc-sig-placeholder { display: none !important; }
+  .bc-tc-scroll { max-height: none; overflow: visible; }
   .header, .footer, .hero, .intro, .features, .itinerary, .pricing, .reservation, .modal-overlay, .toast { display: none !important; }
 }
 </style>
@@ -1680,7 +1731,7 @@ function showSuccessMessage() {
         <div class="bc-detail-item"><label>Date of Birth</label><p>${bd.allTravelers[0].dob ? new Date(bd.allTravelers[0].dob + 'T00:00:00').toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'}) : '—'}</p></div>
         <div class="bc-detail-item"><label>Gender</label><p>${bd.allTravelers[0].gender}</p></div>
         <div class="bc-detail-item"><label>Tour Package</label><p class="highlight">${pkgLabel}</p></div>
-        <div class="bc-detail-item"><label>Travel Date</label><p class="highlight">${bd.travelDateLabel}</p></div>
+        <div class="bc-detail-item"><label>Travel Date</label><p class="highlight">${bd.travelDateLabel || (TRAVEL_DATES[bd.travelDateId] ? new Date(TRAVEL_DATES[bd.travelDateId].start).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) + ' – ' + new Date(TRAVEL_DATES[bd.travelDateId].end).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : bd.travelDateId)}</p></div>
         <div class="bc-detail-item"><label>Payment Scheme</label><p>${payLabel}</p></div>
       </div>
 
@@ -1787,6 +1838,199 @@ function showSuccessMessage() {
         <p style="margin-bottom:0.5rem;"><strong>Age-Based Discounts:</strong> Senior (60+) and Child (2–5) receive ₱5,000 off per head. Infants (0–23 months) are charged a flat ₱50,000. Age is computed based on the tour end date.</p>
         <p><strong>Cancellation:</strong> Cancellations within 90 days of departure are subject to a non-refundable fee of PHP 30,000 per head.</p>
       </div>
+
+      <div class="bc-separator"></div>
+
+      <!-- Full Terms & Conditions -->
+      <div class="bc-tc-container">
+        <div class="bc-section-title">Terms and Conditions</div>
+        <div class="bc-tc-scroll" id="tcScrollBox">
+          <p>These Terms and Conditions ("Agreement") govern your use of the travel services provided by Discover Group ("Discover," "we," or "our"). By accessing or using our services, you agree to be bound by these terms. Please read this Agreement carefully before proceeding. If you do not agree with any provision of this Agreement, you may not use our services.</p>
+
+          <h3>Definitions</h3>
+          <p>"Discover Group" refers to the travel services provided by our company.</p>
+          <p>"Customer(s)," "passenger", "client", "you," or "your" refers to any individual or entity using our travel services.</p>
+          <p>"Service(s)" refers to the travel services, including but not limited to flight bookings, hotel reservations, car rentals, vacation packages, and travel insurance, provided by Discover Group.</p>
+
+          <h3>Booking and Reservations</h3>
+          <p>By using our services, you acknowledge that Discover Group acts as an intermediary between you and various travel service providers (e.g., airlines, hotels, car rental companies), and your bookings and reservations are subject to the terms and conditions of these providers.</p>
+          <p>The contact person is the one responsible for the package of all participants listed above.</p>
+          <p>All bookings and reservations made through Discover Group are subject to availability and confirmation by the relevant travel service providers.</p>
+          <p>You are responsible for providing accurate and complete information during the booking process. Discover Group is not liable for any errors or consequences arising from inaccurate or incomplete information provided by you.</p>
+          <p>Changes or cancellations to bookings may be subject to fees imposed by the travel service providers. You agree to comply with their terms and conditions regarding changes, cancellations, refunds, and other related policies.</p>
+          <p>By using our services, you acknowledge that certain bookings, such as airline tickets and hotel reservations, may be non-refundable and non-rebookable. Once these bookings are made, they cannot be refunded or changed, and no cash surrender value will be provided.</p>
+          <p>Promotions may not be the same for every client. Applicable differences may apply depending on the promotion period of the availed package, number of pax, season and other factors affecting prices of supplies.</p>
+          <p>All confirmed optional tours by clients are non-refundable, non-transferrable and non-rebookable.</p>
+          <p>All discounts and complimentary inclusions are subject to specified deadlines. Failure to avail of these within the given period will result in forfeiture, without extension or compensation.</p>
+
+          <h3>Prior Agreements, Amendments & Non-Waiver</h3>
+          <p>This agreement supersedes all previous consideration, understanding, oral or written, agreements and contracts entered into by the parties. No Amendment to this agreement shall be made unless new booking confirmation is issued. No waiver of any right in this agreement by any party shall be construed unless it shall be in writing by the waiving party.</p>
+
+          <h3>Accommodation</h3>
+          <p>All accommodation in Europe are based on a 3 star hotel category outside the city center on a deluxe, preferred, easy, advanced tour and a 4 star hotel with "some" city center on a premium tour. In case of unavailability, price increase, or other factors, the company reserves the right to choose any hotel with the same category without prior notice.</p>
+          <p>Any request for room upgrade or transfer to another hotel is subject to availability and any rate difference or additional expenses resulting to said request will be shouldered by the client.</p>
+          <p>Some hotel charges key deposit before check-in and will return it to client before check-out. This is not included in the package and client must shoulder the said expense.</p>
+
+          <h3>Itinerary</h3>
+          <p>The daily schedule provided is just a guide and may still vary or be subject to change due to weather conditions, traveling pace, water current, fortuitous event, prices increased and other unforeseen circumstances.</p>
+          <p>All places listed in the itinerary will not be interchanged with any other destination, location, or activity unless necessary without prior notice.</p>
+          <p>Itinerary may interchange including but not limited to point of entry and exit depending on availability of flights, hotels, attractions, and other factors.</p>
+
+          <h3>Airline Ticket</h3>
+          <p>Airline Ticket is non-refundable, non-transferable, and any rebooking request is subject to rebooking penalty and fare difference. Availability of new preferred flight is also not guaranteed.</p>
+          <p>Discover Group reserves the right to change airline depending on availability, schedule preference, and budget restrictions.</p>
+          <p>Guests who do not pass check-in process/requirement will not be able to refund any unused part of the trip.</p>
+          <p>Lay-over or connecting flight from point of origin to point of destination may take up to 24 hours.</p>
+          <p>For land arrangements, Php 30,000 will be deducted to the package rate. The guests will meet the group directly at the first hotel of the group.</p>
+
+          <h3>Travel Documents and Requirements</h3>
+          <p>It is your responsibility to ensure that you have valid travel documents, such as passports, visas, health certificates, and travel authority for government employees required for your travel. Discover Group is not responsible for any consequences arising from your failure to obtain or comply with the necessary travel documents.</p>
+          <p>You must comply with all applicable laws, regulations, and requirements of the countries you are visiting.</p>
+
+          <h3>Travel Insurance</h3>
+          <p>We strongly recommend that you obtain travel insurance to protect yourself against unforeseen circumstances, such as trip cancellations, medical emergencies, or lost luggage.</p>
+          <p>Discover Group is not an insurance provider. We are not responsible for any claims, disputes, or issues related to the travel insurance policies.</p>
+
+          <h3>Limitation of Liability - Booking Amendments</h3>
+          <p>Discover Group acts as an intermediary and does not assume any liability for the acts, omissions, errors, delays, or negligence of the travel service providers.</p>
+          <p>In no event shall Discover Group be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in connection with the use of our services.</p>
+          <p>Discover Group's total liability shall not exceed the total amount paid by you for the specific service giving rise to the claim.</p>
+
+          <h3>Intellectual Property</h3>
+          <p>All intellectual property rights related to our services are the property of Discover Group or its licensors. You may not use, reproduce, or distribute any intellectual property without prior written permission.</p>
+          <p>All digital properties taken during the duration of the trip will be considered a property of Discover Group.</p>
+
+          <h3>Limitation of Liability - Immigration</h3>
+          <p>Discover Group of Travel Services shall not be held responsible for any immigration issues, offloading, or similar incidents experienced by the passenger.</p>
+          <p>Discover Group will not be held responsible for rebooking or refunding any amount from purchased tour packages if a passenger is unable to proceed with the tour due to immigration issues.</p>
+
+          <h3>Forfeiture of Free Items or Services</h3>
+          <p>In cases where any free items or services are provided as part of a booking or reservation, these are subject to availability and may be forfeited if not utilized during the specified time or if the booking is cancelled or changed.</p>
+          <p>All free items are not transferrable, refundable and convertible to cash.</p>
+
+          <h3>Visa Processing</h3>
+          <p>Visa result must be released 90 days prior departure. In the event that visa is not yet released, rebooking should be made for a fee of Php 10,000 per person and travel date must be at least 180 days from the time of rebooking.</p>
+          <p>All costs related to visa processing will not be refundable, transferrable and convertible to cash.</p>
+          <p>Visa processing may start as early as 180 days prior departure.</p>
+          <p>Visa approval cannot be guaranteed. When visa is not granted, the reasons of denial will not be disclosed. Discover Group is not responsible for visa result.</p>
+          <p>It is the client's responsibility to abide to the deadlines set forth by the company's representative without initiatives.</p>
+
+          <h3>Cancellation Fee</h3>
+          <p>For any kind of voluntary cancellations, following cancellation charges will apply:</p>
+          <p class="indent">&gt;90 days prior departure - Php 30,000</p>
+          <p class="indent">&lt;90 days - Forfeiture of payment</p>
+          <p>Once Discover Group visa application process started, all payments are already non-refundable.</p>
+
+          <h3>Visa Refusal</h3>
+          <p>In case of visa refusal, Discover Group has the right to demand a copy of refusal letter to proceed with the succeeding arrangements.</p>
+          <p>If your visa application is rejected or refused by the relevant authorities, Discover Group shall not be liable for any losses, expenses, or damages incurred because of the visa refusal.</p>
+          <p>In case of visa refusal, full payment made will be fully refundable 180 banking days from the time of refund acknowledgement given that all conditions are met:</p>
+          <p class="indent">- For clients who processed their visa by third parties or on their own, visa refusal was given more than 90 days prior departure</p>
+          <p class="indent">- Visa was processed under Discover Group</p>
+          <p>In the event that the clients received their visa refusal 90 days or less, Php 30,000 will be non-refundable.</p>
+          <p>If one or more passengers in a group booking are denied a visa and cannot participate in the tour, the group has to proceed with the tour as planned.</p>
+
+          <h3>Booking Confirmations</h3>
+          <p>All bookings made through Discover Group are subject to availability and confirmation by the respective travel service providers.</p>
+          <p>To secure a booking, full or partial payment may be required at the time of reservation.</p>
+          <p>For Preferred packages, in the event that one or both participants are unable to join the tour, the Client may request to transfer the reservation to another individual, provided that the request is submitted no less than ninety (90) days prior to the scheduled travel date. Requests for name changes made within ninety (90) days of the travel date, or after ticket issuance, shall be subject to a name change fee of PHP 10,000 per participant.</p>
+          <p>If cancellation was made 90 days or more before departure, Php 30,000 per head cancellation fee will apply. For 60-89 days prior departure, 50% cancellation charge from total amount of package per head plus applicable charges will be incurred. For cancellation made 59 days or less before departure date, full amount of total package will be charged.</p>
+
+          <h3>Payment and Cancellation</h3>
+          <p>Billing start date shall be upon signing of Booking Confirmation. In the absence of signed Booking confirmation, service shall be deemed automatically accepted upon initial payment together with the terms and conditions.</p>
+          <p>If a partial payment is made, the remaining balance must be settled based on given deadline on the booking confirmation. Failure to settle the remaining balance within this timeframe may result in cancellation charges or cancellation of all bookings reserved.</p>
+          <p class="bold">Installment Payment:</p>
+          <p>Please deposit the required down payment to temporarily hold your reservation. Your booking is only guaranteed once payment deadline is met. Failure to meet monthly deadline is subject to late penalty fee and may result to booking cancellation.</p>
+          <p>Late penalty fee will be applied for participants who settled payment after agreed payment deadline:</p>
+          <p class="indent">A. 1-15 days after due date: Php 1,000/person</p>
+          <p class="indent">B. 16-30 days after due date: Php 2,000/person</p>
+          <p class="indent">C. 31-45 days after due date: Php 3,000/person</p>
+          <p class="indent">D. 46-60 days after due date: Php 5,000/person</p>
+          <p class="indent">E. 61 days onwards will lead to automatic cancellation of booking</p>
+          <p class="bold">Value Added Tax:</p>
+          <p>All quoted rates are exclusive of the twelve percent (12%) Value-Added Tax (VAT) and any other relevant taxes. The final amount payable may increase to reflect the added tax obligations as determined by the relevant taxing authorities.</p>
+
+          <h3>Age-Based Discounts and Special Rates</h3>
+          <p>Discover Group extends preferential pricing to qualified travelers based on age classification at the time of travel:</p>
+          <p class="indent">a. Senior Citizen (60 years of age or older): Discount of Php 5,000 per qualifying senior traveler.</p>
+          <p class="indent">b. Child (2 to 6 years of age): Discount of Php 5,000 per qualifying child traveler.</p>
+          <p class="indent">c. Infant (0 to 1 year and 11 months): Flat rate of Php 50,000 in lieu of the standard package rate.</p>
+          <p>Age category shall be based exclusively on the traveler's age as of the confirmed departure date. Any change in travel date may affect the age classification and applicable discounts.</p>
+
+          <h3>Lost Luggage and Waiting Time</h3>
+          <p>If your luggage is lost during transit, Discover Group will NOT assist in filing a claim with the relevant airline or transportation provider. Claims should be pursued directly with the airline.</p>
+          <p>Discover Group shall not be held liable for any losses or damages resulting from lost or delayed luggage.</p>
+          <p>Discover Group shall not be held responsible for any inconveniences, losses, or damages resulting from delays in transportation or other services.</p>
+
+          <h3>Cancellation Due to Participant Misconduct</h3>
+          <p>Participants are expected to maintain respectful and appropriate behavior towards tour operators, staff members, fellow participants, and the local community throughout the tour.</p>
+          <p>Discover Group reserves the right to cancel the participant's involvement in the tour due to misconduct without any entitlement to a refund or compensation.</p>
+
+          <h3>Discouraging Connivance Against Discover Group</h3>
+          <p>Participants or any external parties are strictly prohibited from engaging in connivance, collusion, or any illegal activities that aim to defraud, deceive, or harm Discover Group of Travel Services.</p>
+          <p>Discover Group reserves the right to pursue legal remedies and seek damages if connivance or illicit activities result in financial loss, reputational damage, or other harm.</p>
+
+          <h3>Bank Details</h3>
+          <p>All payments to Discover Group of Travel Services Inc. must be made exclusively to the Company's official and designated bank account(s).</p>
+          <p>Any payment made to any other bank account, personal account, third-party account, or unauthorized channel shall not be recognized, acknowledged, or deemed valid by Discover Group of Travel Services Inc.</p>
+          <p>It is the sole responsibility of the client to verify the correctness of the official bank account details prior to making any payment.</p>
+
+          <p style="margin-top:1.5rem;text-align:center;font-size:0.6rem;color:#94a3b8;">032626 v.4 — Discover Group of Travel Services Incorporated</p>
+        </div>
+      </div>
+
+      <!-- Agreement Checkbox -->
+      <div class="bc-agreement" id="bcAgreementBox">
+        <label>
+          <input type="checkbox" id="bcAcceptTerms" onchange="handleTermsCheck(this)">
+          <span>I have read, understood, and agree to the <strong>Terms and Conditions</strong> of the Route A Preferred package as stated above. I acknowledge that the information provided in this booking confirmation is accurate and complete.</span>
+        </label>
+      </div>
+
+      <div class="bc-separator"></div>
+
+      <!-- Signature Section -->
+      <div class="bc-signature-section">
+        <div class="bc-section-title">Agreement & Signature</div>
+        <p class="bc-signature-intro">By signing below, I confirm that I have read, understood, and agree to all terms and conditions stated in this booking confirmation. I acknowledge that the information provided above is accurate and complete.</p>
+
+        <div class="bc-signature-grid">
+          <!-- Client Signature -->
+          <div class="bc-sig-box">
+            <div class="bc-sig-label">Client Signature</div>
+            <div class="bc-sig-canvas-wrap" id="sigCanvasWrap">
+              <canvas id="signatureCanvas"></canvas>
+              <div class="bc-sig-placeholder" id="sigPlaceholder">Sign here with your finger or mouse</div>
+            </div>
+            <div class="bc-sig-actions">
+              <button class="bc-sig-clear" onclick="clearSignature()">✕ Clear</button>
+            </div>
+            <div class="bc-sig-info">
+              <p class="name">${bd.allTravelers[0].firstName} ${bd.allTravelers[0].middleName || ''} ${bd.allTravelers[0].lastName}</p>
+              <p class="date">Date Signed: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+            </div>
+          </div>
+
+          <!-- Travel Consultant -->
+          <div class="bc-sig-box">
+            <div class="bc-sig-label">Travel Consultant</div>
+            <div class="bc-sig-consultant">
+              <p>For office use only</p>
+            </div>
+            <div class="bc-sig-info">
+              <p class="name">Printed Name & Signature</p>
+              <p class="date">Position: Travel Consultant</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="bc-submit-section" id="bcSubmitSection">
+        <button class="bc-submit-btn" id="bcSubmitBtn" disabled onclick="submitSignedConfirmation()">✍️ Submit Signed Confirmation</button>
+        <p class="bc-submit-status pending" id="bcSubmitStatus">Please accept the terms and sign above to submit</p>
+      </div>
+
     </div>
 
     <!-- Footer -->
@@ -1808,6 +2052,162 @@ function showSuccessMessage() {
   document.body.innerHTML = '';
   document.body.appendChild(confEl);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Initialize signature pad after DOM is updated
+  setTimeout(initSignaturePad, 100);
+}
+
+// ==================== SIGNATURE PAD ====================
+let signatureCanvas, signatureCtx, isDrawing = false, hasSigned = false;
+
+function initSignaturePad() {
+  signatureCanvas = document.getElementById('signatureCanvas');
+  if (!signatureCanvas) return;
+  signatureCtx = signatureCanvas.getContext('2d');
+  
+  // Set canvas size to match display size
+  const wrap = document.getElementById('sigCanvasWrap');
+  const rect = wrap.getBoundingClientRect();
+  signatureCanvas.width = rect.width;
+  signatureCanvas.height = rect.height;
+  
+  signatureCtx.strokeStyle = '#1a1f3a';
+  signatureCtx.lineWidth = 2;
+  signatureCtx.lineCap = 'round';
+  signatureCtx.lineJoin = 'round';
+
+  // Mouse events
+  signatureCanvas.addEventListener('mousedown', startDraw);
+  signatureCanvas.addEventListener('mousemove', draw);
+  signatureCanvas.addEventListener('mouseup', endDraw);
+  signatureCanvas.addEventListener('mouseleave', endDraw);
+
+  // Touch events
+  signatureCanvas.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent('mousedown', { clientX: touch.clientX, clientY: touch.clientY });
+    signatureCanvas.dispatchEvent(mouseEvent);
+  });
+  signatureCanvas.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent('mousemove', { clientX: touch.clientX, clientY: touch.clientY });
+    signatureCanvas.dispatchEvent(mouseEvent);
+  });
+  signatureCanvas.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    signatureCanvas.dispatchEvent(new MouseEvent('mouseup'));
+  });
+}
+
+function startDraw(e) {
+  isDrawing = true;
+  const rect = signatureCanvas.getBoundingClientRect();
+  signatureCtx.beginPath();
+  signatureCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+}
+
+function draw(e) {
+  if (!isDrawing) return;
+  const rect = signatureCanvas.getBoundingClientRect();
+  signatureCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+  signatureCtx.stroke();
+  
+  // Hide placeholder and mark as signed
+  if (!hasSigned) {
+    hasSigned = true;
+    const placeholder = document.getElementById('sigPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+    document.getElementById('sigCanvasWrap').classList.add('has-signature');
+    updateSubmitState();
+  }
+}
+
+function endDraw() {
+  isDrawing = false;
+}
+
+function clearSignature() {
+  if (!signatureCanvas || !signatureCtx) return;
+  signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+  hasSigned = false;
+  const placeholder = document.getElementById('sigPlaceholder');
+  if (placeholder) placeholder.style.display = 'block';
+  document.getElementById('sigCanvasWrap').classList.remove('has-signature');
+  updateSubmitState();
+}
+
+function handleTermsCheck(checkbox) {
+  const box = document.getElementById('bcAgreementBox');
+  if (checkbox.checked) {
+    box.classList.add('checked');
+  } else {
+    box.classList.remove('checked');
+  }
+  updateSubmitState();
+}
+
+function updateSubmitState() {
+  const termsChecked = document.getElementById('bcAcceptTerms') && document.getElementById('bcAcceptTerms').checked;
+  const btn = document.getElementById('bcSubmitBtn');
+  const status = document.getElementById('bcSubmitStatus');
+  
+  if (termsChecked && hasSigned) {
+    btn.disabled = false;
+    status.className = 'bc-submit-status ready';
+    status.textContent = '\u2713 Signed — ready to submit';
+  } else {
+    btn.disabled = true;
+    status.className = 'bc-submit-status pending';
+    if (!termsChecked && !hasSigned) {
+      status.textContent = 'Please accept the terms and sign above to submit';
+    } else if (!termsChecked) {
+      status.textContent = 'Please accept the terms and conditions above';
+    } else {
+      status.textContent = 'Please sign above to submit your booking confirmation';
+    }
+  }
+}
+
+function submitSignedConfirmation() {
+  const btn = document.getElementById('bcSubmitBtn');
+  const status = document.getElementById('bcSubmitStatus');
+  btn.disabled = true;
+  btn.innerHTML = '\u23f3 Submitting...';
+  
+  // Get signature as data URL
+  const sigDataUrl = signatureCanvas.toDataURL('image/png');
+  
+  // Send signature data to Web3Forms along with booking reference
+  const formData = new FormData();
+  formData.append('access_key', '4acc2541-8e52-4e2a-a0c4-c5e97a0c3e2a');
+  formData.append('subject', 'SIGNED Booking Confirmation - ' + (lastBookingData ? lastBookingData.allTravelers[0].firstName + ' ' + lastBookingData.allTravelers[0].lastName : 'Client'));
+  formData.append('from_name', 'Route A Preferred - Signed Confirmation');
+  formData.append('Booking_Reference', document.querySelector('.bc-footer p:last-child') ? document.querySelector('.bc-footer p:last-child').textContent : '');
+  formData.append('Client_Name', lastBookingData ? lastBookingData.allTravelers[0].firstName + ' ' + lastBookingData.allTravelers[0].middleName + ' ' + lastBookingData.allTravelers[0].lastName : '');
+  formData.append('Terms_Accepted', 'Yes - Client accepted all Terms & Conditions');
+  formData.append('Signature_Provided', 'Yes - Digital signature captured');
+  formData.append('Date_Signed', new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+  formData.append('Signature_Data', sigDataUrl);
+  
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: formData
+  }).then(r => r.json()).then(data => {
+    status.className = 'bc-submit-status ready';
+    status.textContent = '\u2713 Booking confirmation submitted successfully!';
+    btn.innerHTML = '\u2705 Submitted';
+    btn.style.background = '#16a34a';
+    
+    // Show success toast
+    showToast('Signed booking confirmation submitted successfully!', 'success');
+  }).catch(err => {
+    status.className = 'bc-submit-status ready';
+    status.textContent = '\u2713 Confirmation saved. You may print this page for your records.';
+    btn.innerHTML = '\u2705 Saved';
+    btn.style.background = '#16a34a';
+  });
 }
 
 // ==================== INIT ====================
