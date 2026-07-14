@@ -481,7 +481,29 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
   .bc-sig-placeholder { display: none !important; }
   .bc-tc-scroll { max-height: none; overflow: visible; }
   .header, .footer, .hero, .intro, .features, .itinerary, .pricing, .reservation, .modal-overlay, .toast { display: none !important; }
+  .detail-popup-overlay { display: none !important; }
 }
+
+/* Draggable Detail Popup */
+.detail-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.detail-popup-overlay.active { opacity: 1; pointer-events: all; }
+.detail-popup { position: absolute; width: 90%; max-width: 500px; max-height: 80vh; background: white; border-radius: 1rem; box-shadow: 0 25px 60px rgba(0,0,0,0.3); overflow: hidden; transform: scale(0.95); transition: transform 0.2s; }
+.detail-popup-overlay.active .detail-popup { transform: scale(1); }
+.detail-popup-header { padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; cursor: grab; user-select: none; border-bottom: 1px solid #e5e7eb; }
+.detail-popup-header:active { cursor: grabbing; }
+.detail-popup-header h3 { font-size: 1rem; font-weight: 800; margin: 0; font-family: 'Inter', sans-serif; }
+.detail-popup-header .close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f3f4f6; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.detail-popup-header .close-btn:hover { background: #e5e7eb; }
+.detail-popup-body { padding: 1.5rem; overflow-y: auto; max-height: calc(80vh - 60px); }
+.detail-popup-body .list-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; font-size: 0.85rem; color: #374151; border-bottom: 1px solid #f3f4f6; }
+.detail-popup-body .list-item:last-child { border-bottom: none; }
+.detail-popup-body .list-item .icon { flex-shrink: 0; font-weight: 700; }
+.detail-popup-body .list-item .icon.green { color: #16a34a; }
+.detail-popup-body .list-item .icon.red { color: #dc2626; }
+.detail-popup-body .list-item .icon.blue { color: #2563eb; }
+.detail-popup-header.green { background: #ecfdf5; }
+.detail-popup-header.red { background: #fef2f2; }
+.detail-popup-header.blue { background: #eff6ff; }
 </style>
 
 </head>
@@ -1776,27 +1798,12 @@ function showSuccessMessage() {
         ${benefitsHtml}
       </div>
 
-      <!-- Inclusions -->
-      <div class="bc-section-title">Package Inclusions</div>
-      <div class="bc-inclusions">
-        <div class="bc-inclusions-grid">
-          <div class="item"><span class="check">✓</span> Round-trip airfare (Manila–Paris, Rome–Manila)</div>
-          <div class="item"><span class="check">✓</span> Round-trip airport transfers</div>
-          <div class="item"><span class="check">✓</span> Airport terminal fee</div>
-          <div class="item"><span class="check">✓</span> 1pc 20kg check-in luggage + 1pc personal bag</div>
-          <div class="item"><span class="check">✓</span> 12 nights hotel accommodation (3-star)</div>
-          <div class="item"><span class="check">✓</span> Visit France, Switzerland, Italy & Vatican</div>
-          <div class="item"><span class="check">✓</span> Coach transfers all throughout the tour</div>
-          <div class="item"><span class="check">✓</span> Daily breakfast at the hotel</div>
-        </div>
-      </div>
-
-      <!-- Exclusions -->
-      <div class="bc-section-title">Package Exclusions</div>
-      <div class="bc-exclusions">
-        <p>✗ Lunch and Dinner (for more diversity and freedom of food choices)</p>
-        <p>✗ Mandatory permits, city tax & compulsory tipping: EUR 525/head</p>
-        <p>✗ Philippine Travel Tax: PHP 1,620/head</p>
+      <!-- Inclusions / Exclusions / Optionals - Clickable Links -->
+      <div class="bc-section-title">Package Details</div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+        <a href="#" onclick="openDetailPopup('inclusions');return false;" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.2rem;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:0.5rem;color:#16a34a;font-size:0.8rem;font-weight:700;text-decoration:none;transition:all 0.2s;">✓ Package Inclusions</a>
+        <a href="#" onclick="openDetailPopup('exclusions');return false;" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.2rem;background:#fef2f2;border:1px solid #fecaca;border-radius:0.5rem;color:#dc2626;font-size:0.8rem;font-weight:700;text-decoration:none;transition:all 0.2s;">✕ Package Exclusions</a>
+        <a href="#" onclick="openDetailPopup('optionals');return false;" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.2rem;background:#eff6ff;border:1px solid #bfdbfe;border-radius:0.5rem;color:#2563eb;font-size:0.8rem;font-weight:700;text-decoration:none;transition:all 0.2s;">◎ Optional Services</a>
       </div>
 
       <div class="bc-separator"></div>
@@ -2276,6 +2283,154 @@ document.addEventListener('DOMContentLoaded', () => {
   recalculate();
   updateCountdown();
 });
+
+// ==================== DRAGGABLE DETAIL POPUP ====================
+const DETAIL_CONTENT = {
+  inclusions: {
+    title: '✓ Package Inclusions',
+    color: 'green',
+    items: [
+      'Round-trip airfare (Manila–Paris, Rome–Manila)',
+      'Round-trip airport transfers',
+      'Airport terminal fee',
+      '1pc 20kg check-in luggage + 1pc personal bag',
+      '12 nights hotel accommodation (3-star)',
+      'Visit France, Switzerland, Italy & Vatican',
+      'Coach transfers all throughout the tour',
+      'Daily breakfast at the hotel',
+      'English-speaking tour guide',
+      'All city tours as per itinerary'
+    ]
+  },
+  exclusions: {
+    title: '✕ Package Exclusions',
+    color: 'red',
+    items: [
+      'Lunch and Dinner (for more diversity and freedom of food choices)',
+      'Mandatory permits, city tax & compulsory tipping: EUR 525/head',
+      'Philippine Travel Tax: PHP 1,620/head'
+    ]
+  },
+  optionals: {
+    title: '◎ Optional Services',
+    color: 'blue',
+    items: [
+      'Visa assistance fee & appointment fee: PHP 20,000/pax',
+      'Travel Insurance: PHP 6,000/pax',
+      'Admission fees and Optional tours/activities',
+      'Hotel room upgrade (subject to availability)',
+      'Extra luggage allowance (airline rates apply)'
+    ]
+  }
+};
+
+function openDetailPopup(type) {
+  const data = DETAIL_CONTENT[type];
+  if (!data) return;
+  
+  // Remove existing popup if any
+  let overlay = document.getElementById('detailPopupOverlay');
+  if (overlay) overlay.remove();
+  
+  const icon = type === 'inclusions' ? '✓' : type === 'exclusions' ? '✕' : '◎';
+  const itemsHtml = data.items.map(item => 
+    `<div class="list-item"><span class="icon ${data.color}">${icon}</span><span>${item}</span></div>`
+  ).join('');
+  
+  overlay = document.createElement('div');
+  overlay.id = 'detailPopupOverlay';
+  overlay.className = 'detail-popup-overlay';
+  overlay.innerHTML = `
+    <div class="detail-popup" id="detailPopup">
+      <div class="detail-popup-header ${data.color}" id="detailPopupHeader">
+        <h3>${data.title}</h3>
+        <button class="close-btn" onclick="closeDetailPopup()">&times;</button>
+      </div>
+      <div class="detail-popup-body">
+        ${itemsHtml}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  
+  // Activate with slight delay for animation
+  requestAnimationFrame(() => overlay.classList.add('active'));
+  
+  // Close on overlay click
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeDetailPopup();
+  });
+  
+  // Make draggable
+  makeDraggable(document.getElementById('detailPopup'), document.getElementById('detailPopupHeader'));
+}
+
+function closeDetailPopup() {
+  const overlay = document.getElementById('detailPopupOverlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+    setTimeout(() => overlay.remove(), 200);
+  }
+}
+
+function makeDraggable(element, handle) {
+  let isDragging = false;
+  let startX, startY, initialLeft, initialTop;
+  
+  handle.addEventListener('mousedown', startDrag);
+  handle.addEventListener('touchstart', startDrag, { passive: false });
+  
+  function startDrag(e) {
+    isDragging = true;
+    const rect = element.getBoundingClientRect();
+    
+    // Set position to absolute with current coordinates
+    element.style.left = rect.left + 'px';
+    element.style.top = rect.top + 'px';
+    element.style.margin = '0';
+    
+    if (e.type === 'touchstart') {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    } else {
+      startX = e.clientX;
+      startY = e.clientY;
+    }
+    initialLeft = rect.left;
+    initialTop = rect.top;
+    
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('touchend', stopDrag);
+    e.preventDefault();
+  }
+  
+  function drag(e) {
+    if (!isDragging) return;
+    let currentX, currentY;
+    if (e.type === 'touchmove') {
+      currentX = e.touches[0].clientX;
+      currentY = e.touches[0].clientY;
+    } else {
+      currentX = e.clientX;
+      currentY = e.clientY;
+    }
+    const dx = currentX - startX;
+    const dy = currentY - startY;
+    element.style.left = (initialLeft + dx) + 'px';
+    element.style.top = (initialTop + dy) + 'px';
+    e.preventDefault();
+  }
+  
+  function stopDrag() {
+    isDragging = false;
+    document.removeEventListener('mousemove', drag);
+    document.removeEventListener('mouseup', stopDrag);
+    document.removeEventListener('touchmove', drag);
+    document.removeEventListener('touchend', stopDrag);
+  }
+}
 </script>
 </body>
 </html>
