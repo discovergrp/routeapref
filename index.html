@@ -505,19 +505,19 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 .detail-popup-header.red { background: #fef2f2; }
 .detail-popup-header.blue { background: #eff6ff; }
 
-/* Detail Link Buttons (main page) */
-.detail-link-btn { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem; border-radius: 0.75rem; text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.2s ease; border: 2px solid; }
-.detail-link-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.detail-link-btn .detail-link-icon { font-size: 1.3rem; width: 2rem; text-align: center; }
-.detail-link-btn .detail-link-text { flex: 1; text-align: left; }
-.detail-link-btn .detail-link-arrow { font-size: 1.2rem; opacity: 0.6; transition: transform 0.2s; }
-.detail-link-btn:hover .detail-link-arrow { transform: translateX(4px); opacity: 1; }
-.detail-link-btn.green-btn { background: #ecfdf5; border-color: #a7f3d0; color: #16a34a; }
-.detail-link-btn.green-btn:hover { background: #d1fae5; }
-.detail-link-btn.red-btn { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
-.detail-link-btn.red-btn:hover { background: #fee2e2; }
-.detail-link-btn.blue-btn { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
-.detail-link-btn.blue-btn:hover { background: #dbeafe; }
+/* Detail Link Buttons (main page) - Luxurious */
+.detail-link-btn { display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 2rem; border-radius: 1rem; text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.3s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(212,175,55,0.3); background: linear-gradient(135deg, #0a1e5e 0%, #1a3a8a 100%); color: white; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(10,30,94,0.2); }
+.detail-link-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent); transition: left 0.5s; }
+.detail-link-btn:hover::before { left: 100%; }
+.detail-link-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(10,30,94,0.3); border-color: rgba(212,175,55,0.6); }
+.detail-link-btn .detail-link-icon { font-size: 1.4rem; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0; }
+.detail-link-btn .detail-link-text { flex: 1; text-align: left; font-family: 'Inter', sans-serif; letter-spacing: 0.02em; }
+.detail-link-btn .detail-link-arrow { font-size: 1.2rem; opacity: 0.5; transition: all 0.3s; color: #d4af37; }
+.detail-link-btn:hover .detail-link-arrow { transform: translateX(5px); opacity: 1; }
+.detail-link-btn.green-btn .detail-link-icon { background: rgba(22,163,106,0.2); color: #4ade80; }
+.detail-link-btn.red-btn .detail-link-icon { background: rgba(220,38,38,0.2); color: #fca5a5; }
+.detail-link-btn.blue-btn .detail-link-icon { background: rgba(37,99,235,0.2); color: #93c5fd; }
+.detail-link-btn .detail-link-sub { display: block; font-size: 0.7rem; font-weight: 400; opacity: 0.7; margin-top: 0.2rem; letter-spacing: 0.03em; }
 </style>
 
 </head>
@@ -747,23 +747,23 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
   <div class="inclusions-header">
     <span class="section-badge">PACKAGE DETAILS</span>
     <h2>Inclusions, Exclusions & Optionals</h2>
-    <p>A clear breakdown of what's covered, what's not, and what's available at additional cost. Click each category below to view details.</p>
+    <p>Everything you need to know about your Route A Preferred package. Tap each category to explore.</p>
   </div>
-  <div class="inclusions-content" style="text-align:center;">
-    <div style="display:flex;flex-direction:column;gap:1rem;max-width:400px;margin:0 auto;">
+  <div class="inclusions-content">
+    <div style="display:flex;flex-direction:column;gap:1.2rem;max-width:480px;margin:0 auto;">
       <a href="#" onclick="openDetailPopup('inclusions');return false;" class="detail-link-btn green-btn">
         <span class="detail-link-icon">✓</span>
-        <span class="detail-link-text">Package Inclusions</span>
+        <span class="detail-link-text">Package Inclusions<span class="detail-link-sub">Airfare, hotels, transfers & more</span></span>
         <span class="detail-link-arrow">→</span>
       </a>
       <a href="#" onclick="openDetailPopup('exclusions');return false;" class="detail-link-btn red-btn">
         <span class="detail-link-icon">✕</span>
-        <span class="detail-link-text">Package Exclusions</span>
+        <span class="detail-link-text">Package Exclusions<span class="detail-link-sub">Meals, taxes & travel tax</span></span>
         <span class="detail-link-arrow">→</span>
       </a>
       <a href="#" onclick="openDetailPopup('optionals');return false;" class="detail-link-btn blue-btn">
         <span class="detail-link-icon">◎</span>
-        <span class="detail-link-text">Optional Services</span>
+        <span class="detail-link-text">Optional Services<span class="detail-link-sub">Visa assistance, insurance & upgrades</span></span>
         <span class="detail-link-arrow">→</span>
       </a>
     </div>
@@ -864,6 +864,12 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
       <div class="form-group" style="margin-bottom:1.5rem;">
         <label>Special Requests</label>
         <textarea id="notes" rows="3" placeholder="Any special requests or additional traveler names..."></textarea>
+      </div>
+
+      <!-- Freebie Section -->
+      <div class="form-group" id="freebieSection" style="margin-bottom:1.5rem;display:none;">
+        <label style="color:#16a34a;font-weight:800;">🎁 FREEBIES</label>
+        <div id="freebieContent" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:2px solid #a7f3d0;border-radius:0.75rem;padding:1rem 1.25rem;"></div>
       </div>
 
       <!-- Submit -->
@@ -1174,6 +1180,7 @@ function updateTravelers() {
     list.innerHTML = html;
   }
   recalculate();
+  updateFreebies();
 }
 
 function selectPackage(type) {
@@ -1190,6 +1197,37 @@ function selectPayment(type) {
     el.classList.toggle('active', el.dataset.value === type);
   });
   recalculate();
+}
+
+function updateFreebies() {
+  const section = document.getElementById('freebieSection');
+  const content = document.getElementById('freebieContent');
+  if (!section || !content) return;
+  
+  const now = new Date();
+  const jul18 = new Date('2026-07-18T23:59:59+08:00');
+  const jul20 = new Date('2026-07-20T23:59:59+08:00');
+  const count = parseInt(document.getElementById('travelersCount').value || '1');
+  
+  let freebies = [];
+  
+  // Freebie 1: Register on or before Jul 18, 2026
+  if (now <= jul18) {
+    freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>Free 2 nights Salerno and Amalfi optional tour</strong> worth Php 45,000 per head</span></div>');
+  }
+  
+  // Freebie 2: Register on or before Jul 20, 2026 + 12 pax or more
+  if (now <= jul20 && count >= 12) {
+    freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>Free Visa Processing and Travel Insurance</strong> worth Php 26,000 per head</span></div>');
+  }
+  
+  if (freebies.length > 0) {
+    section.style.display = 'block';
+    content.innerHTML = freebies.join('');
+  } else {
+    section.style.display = 'none';
+    content.innerHTML = '';
+  }
 }
 
 function recalculate() {
@@ -2279,6 +2317,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initItinerary();
   recalculate();
   updateCountdown();
+  updateFreebies();
 });
 
 // ==================== DRAGGABLE DETAIL POPUP ====================
