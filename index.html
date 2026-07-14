@@ -1556,6 +1556,10 @@ function showSuccessMessage() {
   const bd = lastBookingData;
   if (!bd) return;
 
+  // Update page title with lead name
+  const leadName = `${bd.allTravelers[0].firstName} ${bd.allTravelers[0].middleName ? bd.allTravelers[0].middleName + ' ' : ''}${bd.allTravelers[0].lastName}${bd.allTravelers[0].suffix && bd.allTravelers[0].suffix !== 'None' ? ' ' + bd.allTravelers[0].suffix : ''}`;
+  document.title = `Booking Confirmation - ${leadName}`;
+
   // Generate reference number
   const now = new Date();
   const refNum = `ROUTEA-${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${String(Math.floor(Math.random()*9000)+1000)}`;
