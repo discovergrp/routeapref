@@ -1225,8 +1225,14 @@ function updateFreebies() {
   }
   
   // Freebie 3: Promo code DGexclusive4626 + Jun 8, 2027 travel date (Buy 5 Get 1 FREE)
+  // 1 free pax for every 6 pax (e.g., 6 pax = 1 free, 12 pax = 2 free, 18 pax = 3 free)
   if (hasBuy5Get1) {
-    freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>1 FREE participant in a group of 6</strong> (Promo Code: DGexclusive4626)</span></div>');
+    const freePax = Math.floor(count / 6);
+    if (freePax >= 1) {
+      freebies.push(`<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>${freePax} FREE participant${freePax > 1 ? 's' : ''} in a group of ${count}</strong> (Buy 5 Get 1 FREE — Promo Code: DGexclusive4626)</span></div>`);
+    } else {
+      freebies.push('<div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.5rem 0;"><span style="color:#16a34a;font-size:1.2rem;">\u2713</span><span style="font-size:0.85rem;color:#15803d;"><strong>Buy 5 Get 1 FREE</strong> — Add more travelers to reach 6 pax for 1 free slot (Promo Code: DGexclusive4626)</span></div>');
+    }
   }
   
   if (freebies.length > 0) {
