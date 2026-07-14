@@ -489,10 +489,10 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 .detail-popup-overlay.active { opacity: 1; pointer-events: all; }
 .detail-popup { position: absolute; width: 90%; max-width: 500px; max-height: 80vh; background: white; border-radius: 1rem; box-shadow: 0 25px 60px rgba(0,0,0,0.3); overflow: hidden; transform: scale(0.95); transition: transform 0.2s; }
 .detail-popup-overlay.active .detail-popup { transform: scale(1); }
-.detail-popup-header { padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; cursor: grab; user-select: none; border-bottom: 1px solid #e5e7eb; }
+.detail-popup-header { padding: 1.2rem 1.5rem; display: flex; align-items: center; justify-content: space-between; cursor: grab; user-select: none; border-bottom: 2px solid #e5e7eb; }
 .detail-popup-header:active { cursor: grabbing; }
-.detail-popup-header h3 { font-size: 1rem; font-weight: 800; margin: 0; font-family: 'Inter', sans-serif; }
-.detail-popup-header .close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f3f4f6; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.detail-popup-header h3 { font-size: 1.3rem; font-weight: 900; margin: 0; font-family: 'Inter', sans-serif; letter-spacing: 0.01em; color: #111827; }
+.detail-popup-header .close-btn { width: 34px; height: 34px; border-radius: 50%; border: none; background: #f3f4f6; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .detail-popup-header .close-btn:hover { background: #e5e7eb; }
 .detail-popup-body { padding: 1.5rem; overflow-y: auto; max-height: calc(80vh - 60px); }
 .detail-popup-body .list-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; font-size: 0.85rem; color: #374151; border-bottom: 1px solid #f3f4f6; }
@@ -502,8 +502,11 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
 .detail-popup-body .list-item .icon.red { color: #dc2626; }
 .detail-popup-body .list-item .icon.blue { color: #2563eb; }
 .detail-popup-header.green { background: #ecfdf5; }
+.detail-popup-header.green h3 { color: #166534; }
 .detail-popup-header.red { background: #fef2f2; }
+.detail-popup-header.red h3 { color: #991b1b; }
 .detail-popup-header.blue { background: #eff6ff; }
+.detail-popup-header.blue h3 { color: #1e40af; }
 
 /* Detail Link Buttons (main page) - Luxurious */
 .detail-link-btn { display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 2rem; border-radius: 1rem; text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.3s cubic-bezier(0.23,1,0.32,1); border: 1px solid rgba(212,175,55,0.3); background: linear-gradient(135deg, #0a1e5e 0%, #1a3a8a 100%); color: white; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(10,30,94,0.2); }
