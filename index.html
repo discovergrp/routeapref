@@ -1295,20 +1295,16 @@ function recalculate() {
   let promoApplied = false;
   let promoDiscount = 0;
   
-  if (enablePromo && fullPayingCount >= 5) {
+  if (enablePromo && fullPayingCount >= 6) {
     promoApplied = true;
-    const infantSlot = classified.find(p => p.category === 'infant');
-    if (infantSlot) {
-      promoDiscount = infantSlot.rate;
-      infantSlot.isFree = true;
-      infantSlot.finalRate = 0;
-    } else {
-      const fullPaying = classified.filter(p => p.category !== 'infant');
-      if (fullPaying.length >= 6) {
-        promoDiscount = fullPaying[5].rate;
-        fullPaying[5].isFree = true;
-        fullPaying[5].finalRate = 0;
-      }
+    const fullPaying = classified.filter(p => p.category !== 'infant');
+    const numFree = Math.floor(fullPaying.length / 6); // 1 free per 6 pax
+    // Make the last N pax free (cheapest ones at the end)
+    for (let f = 0; f < numFree && f < fullPaying.length; f++) {
+      const freeIdx = fullPaying.length - 1 - f;
+      promoDiscount += fullPaying[freeIdx].finalRate;
+      fullPaying[freeIdx].isFree = true;
+      fullPaying[freeIdx].finalRate = 0;
     }
   }
   
@@ -1542,19 +1538,14 @@ function handleSubmit(e) {
   const enablePromo = travelDateId === '2027-06-08' && promoCodeVerified;
   const fullPayingCount = classified.filter(p => p.category !== 'infant').length;
   let confirmPromoDiscount = 0;
-  if (enablePromo && fullPayingCount >= 5) {
-    const infantSlot = classified.find(p => p.category === 'infant');
-    if (infantSlot) {
-      confirmPromoDiscount = infantSlot.rate;
-      infantSlot.isFree = true;
-      infantSlot.finalRate = 0;
-    } else {
-      const fullPaying = classified.filter(p => p.category !== 'infant');
-      if (fullPaying.length >= 6) {
-        confirmPromoDiscount = fullPaying[5].rate;
-        fullPaying[5].isFree = true;
-        fullPaying[5].finalRate = 0;
-      }
+  if (enablePromo && fullPayingCount >= 6) {
+    const fullPaying = classified.filter(p => p.category !== 'infant');
+    const numFree = Math.floor(fullPaying.length / 6); // 1 free per 6 pax
+    for (let f = 0; f < numFree && f < fullPaying.length; f++) {
+      const freeIdx = fullPaying.length - 1 - f;
+      confirmPromoDiscount += fullPaying[freeIdx].finalRate;
+      fullPaying[freeIdx].isFree = true;
+      fullPaying[freeIdx].finalRate = 0;
     }
   }
   const confirmGrandTotal = classified.reduce((sum, p) => sum + p.finalRate, 0);
