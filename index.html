@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Route A Preferred — Europe Travel Sales Funnel | Discover Group</title>
-<meta name="description" content="Route A Preferred: 15 Days / 13 Nights European Tour — France, Switzerland, Italy, Vatican. Starting at ₱180,000/head with flexible payment options.">
+<meta name="description" content="Route A Preferred: 15 Days / 12 Nights European Tour — France, Switzerland, Italy, Vatican. Starting at ₱180,000/head with flexible payment options.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -1711,11 +1711,11 @@ function showSuccessMessage() {
         <thead><tr><th>#</th><th>Payment</th><th>Due Date</th><th style="text-align:right;">Amount (Per Head)</th></tr></thead>
         <tbody>
           <tr><td style="text-align:center;">1</td><td>Down Payment</td><td>${new Date(Date.now() + 86400000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</td><td class="text-right font-bold">${formatPHP(50000)}</td></tr>
-          <tr><td style="text-align:center;">2</td><td>Remaining Balance</td><td>5 days after visa result release</td><td class="text-right font-bold">${formatPHP(balance)}</td></tr>
+          <tr><td style="text-align:center;">2</td><td>Remaining Balance</td><td>Upon visa approval</td><td class="text-right font-bold">${formatPHP(balance)}</td></tr>
           <tr class="total-row"><td></td><td style="font-weight:900;">TOTAL</td><td></td><td class="text-right" style="font-size:0.95rem;">${formatPHP(perHead)} /head</td></tr>
         </tbody>
       </table>
-      <p class="bc-vat-note">Note: Visa application process starts at least 6 months before the travel date.</p>`;
+      <p class="bc-vat-note">Note: The remaining balance is due upon visa approval. Visa application process starts at least 6 months before the travel date.</p>`;
   } else {
     const perHead = bd.grandTotal / bd.count;
     paymentScheduleHtml = `
@@ -1825,7 +1825,7 @@ function showSuccessMessage() {
       <!-- Package Rate -->
       <div class="bc-section-title">Package Rate & Booking Details</div>
       <div class="bc-details-grid" style="margin-bottom:1.5rem;">
-        <div class="bc-detail-item"><label>Package</label><p>Route A Preferred — 15 Days / 13 Nights</p></div>
+        <div class="bc-detail-item"><label>Package</label><p>Route A Preferred — 15 Days / 12 Nights</p></div>
         <div class="bc-detail-item"><label>Standard Rate</label><p class="highlight">${pkgRate} per head</p></div>
         <div class="bc-detail-item"><label>Destinations</label><p>France, Switzerland, Italy & Vatican</p></div>
         <div class="bc-detail-item"><label>Total Passengers</label><p>${bd.count} person(s)</p></div>
